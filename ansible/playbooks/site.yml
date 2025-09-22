@@ -1,40 +1,27 @@
 ---
-- name: Configure Web Servers
-  hosts: webservers
+- name: Configure Local Web Server
+  hosts: localhost
   become: yes
   tasks:
     - name: Install Apache
-      yum:
-        name: httpd
+      apt:
+        name: apache2
         state: present
+        update_cache: yes
 
     - name: Start and enable Apache
       systemd:
-        name: httpd
+        name: apache2
         state: started
         enabled: yes
-
-    - name: Install NFS client
-      yum:
-        name: nfs-utils
-        state: present
-
-    - name: Create web directory
-      file:
-        path: /var/www/html
-        state: directory
-        owner: apache
-        group: apache
-        mode: '0755'
 
     - name: Deploy index page
       copy:
         content: |
-          <h1>Web Server {{ inventory_hostname }}</h1>
-          <p>Deployed via Ansible at {{ ansible_date_time.iso8601 }}</p>
+          <h1>Ansible Deployment Success!</h1>
+          <p>Deployed at {{ ansible_date_time.iso8601 }}</p>
+          <p>Webhook test successful!</p>
         dest: /var/www/html/index.html
-        owner: apache
-        group: apache
 
     - name: Create test file
       copy:

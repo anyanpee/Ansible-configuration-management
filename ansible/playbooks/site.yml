@@ -1,29 +1,22 @@
 ---
-- name: Configure Local Web Server
-  hosts: localhost
+- name: update web, nfs and db servers
+  hosts: webservers, nfs, db
   become: yes
   tasks:
-    - name: Install Apache
+    - name: ensure wireshark is at the latest version
+      yum:
+        name: wireshark
+        state: latest
+
+- name: update LB server
+  hosts: lb
+  become: yes
+  tasks:
+    - name: Update apt repo
       apt:
-        name: apache2
-        state: present
         update_cache: yes
 
-    - name: Start and enable Apache
-      systemd:
-        name: apache2
-        state: started
-        enabled: yes
-
-    - name: Deploy index page
-      copy:
-        content: |
-          <h1>Ansible Deployment Success!</h1>
-          <p>Deployed at {{ ansible_date_time.iso8601 }}</p>
-          <p>Webhook test successful!</p>
-        dest: /var/www/html/index.html
-
-    - name: Create test file
-      copy:
-        content: "Webhook deployment test - {{ ansible_date_time.iso8601 }}"
-        dest: /tmp/webhook-test.txt
+    - name: ensure wireshark is at the latest version
+      apt:
+        name: wireshark
+        state: latest

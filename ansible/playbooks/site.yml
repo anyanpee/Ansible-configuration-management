@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 - name: Configure Local Web Server
   hosts: localhost
   become: yes
@@ -28,3 +29,26 @@
         content: "Webhook deployment test - {{ ansible_date_time.iso8601 }}"
         dest: /tmp/webhook-test.txt
  
+=======
+- name: update web, nfs and db servers
+  hosts: webservers, nfs, db
+  become: yes
+  tasks:
+    - name: ensure wireshark is at the latest version
+      yum:
+        name: wireshark
+        state: latest
+
+- name: update LB server
+  hosts: lb
+  become: yes
+  tasks:
+    - name: Update apt repo
+      apt:
+        update_cache: yes
+
+    - name: ensure wireshark is at the latest version
+      apt:
+        name: wireshark
+        state: latest
+>>>>>>> 3043089da642f59e7f016ba4a07a7d86c293f958

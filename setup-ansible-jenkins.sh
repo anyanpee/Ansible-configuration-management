@@ -1,4 +1,5 @@
 #!/bin/bash
+<<<<<<< HEAD
 
 # Ansible Jenkins Setup Script
 # Run this on your Ubuntu Jenkins server
@@ -54,3 +55,30 @@ echo "4. Configure webhook URL: http://your-jenkins-ip:8080/github-webhook/"
 echo ""
 echo "SSH Public Key:"
 cat ~/.ssh/ansible_key.pub
+=======
+set -e
+echo "=== Ansible Jenkins CI/CD Setup ==="
+
+# Update system
+sudo apt update
+
+# Install Ansible and dependencies via apt (no pip needed)
+sudo apt install -y ansible python3-boto3 python3-botocore git curl
+
+# Generate SSH key
+if [ ! -f ~/.ssh/ansible_key ]; then
+    ssh-keygen -t rsa -b 4096 -f ~/.ssh/ansible_key -N ""
+    echo "SSH key generated: ~/.ssh/ansible_key"
+fi
+
+# Create Jenkins workspace
+sudo mkdir -p /var/lib/jenkins/workspace/ansible-deployment
+sudo chown -R $USER:$USER /var/lib/jenkins/workspace/ansible-deployment
+
+# Set environment
+export ANSIBLE_HOST_KEY_CHECKING=False
+
+echo "=== Setup Complete ==="
+echo "SSH Public Key (copy this to target servers):"
+cat ~/.ssh/ansible_key.pub
+>>>>>>> 3043089da642f59e7f016ba4a07a7d86c293f958

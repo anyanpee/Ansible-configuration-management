@@ -1,0 +1,39 @@
+---
+- name: Test Deployment Playbook
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Check system uptime
+      command: uptime
+      register: uptime_result
+
+    - name: Display uptime
+      debug:
+        msg: "{{ inventory_hostname }} uptime: {{ uptime_result.stdout }}"
+
+    - name: Check disk space
+      shell: df -h /
+      register: disk_space
+
+    - name: Display disk space
+      debug:
+        msg: "{{ inventory_hostname }} disk space: {{ disk_space.stdout_lines[1] }}"
+
+    - name: Create test file
+      copy:
+        content: |
+          Deployment Test - {{ ansible_date_time.iso8601 }}
+          Server: {{ inventory_hostname }}
+          IP: {{ ansible_default_ipv4.address }}
+        dest: /tmp/ansible-test-{{ ansible_date_time.epoch }}.txt
+        mode: '0644'
+
+    - name: Verify test file
+      stat:
+        path: /tmp/ansible-test-{{ ansible_date_time.epoch }}.txt
+      register: test_file
+
+    - name: Confirm deployment
+      debug:
+        msg: "✅ Test deployment successful on {{ inventory_hostname }}"
+      when: test_file.stat.exists

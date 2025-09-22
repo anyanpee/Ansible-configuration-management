@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    
+    environment {
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Ansible Lint') {
+            steps {
+                sh 'ansible-lint ansible/playbooks/site.yml || true'
+            }
+        }
+        
+        stage('Deploy Infrastructure') {
+            steps {
+                dir('ansible') {
+                    sh 'ansible-playbook -i inventory/hosts playbooks/site.yml'
+                }
+            }
+        }
+        
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: '**/*', fingerprint: true
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            echo 'Deployment completed successfully!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}

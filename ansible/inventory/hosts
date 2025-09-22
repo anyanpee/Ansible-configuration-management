@@ -1,6 +1,6 @@
 [webservers]
-web1 ansible_host=172.31.33.248 ansible_user=ec2-user
-web2 ansible_host=172.31.38.180 ansible_user=ec2-user
+web1 ansible_host=172.31.34.198 ansible_user=ec2-user
+web2 ansible_host=172.31.42.104 ansible_user=ec2-user
 
 [nfs]
 nfs1 ansible_host=172.31.32.100 ansible_user=ec2-user
@@ -12,5 +12,5 @@ db1 ansible_host=172.31.47.119 ansible_user=ec2-user
 lb1 ansible_host=172.31.47.119 ansible_user=ubuntu
 
 [all:vars]
-ansible_ssh_private_key_file=~/.ssh/ansible_key
+ansible_ssh_private_key_file=~/.ssh/oregon-keypair.pem
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'

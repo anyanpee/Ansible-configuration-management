@@ -7,20 +7,6 @@
       yum:
         name: wireshark
         state: latest
-    
-    - name: install additional monitoring tools
-      yum:
-        name:
-          - tcpdump
-          - nmap
-          - htop
-        state: latest
-    
-    - name: create wireshark config directory
-      file:
-        path: /etc/wireshark
-        state: directory
-        mode: '0755'
 
 - name: update LB server
   hosts: lb
@@ -34,18 +20,3 @@
       apt:
         name: wireshark
         state: latest
-    
-    - name: install additional monitoring tools
-      apt:
-        name:
-          - tcpdump
-          - nmap
-          - htop
-        state: latest
-    
-    - name: configure wireshark permissions
-      lineinfile:
-        path: /etc/group
-        regexp: '^wireshark:'
-        line: 'wireshark:x:1001:'
-        create: yes

@@ -14,7 +14,7 @@
 - name: clone a repo
   become: true
   ansible.builtin.git:
-    repo: https://github.com/anyanpee/tooling.git
+    repo: https://github.com/anyanpee/Jenkins-CI-CD-Pipeline-for-DevOps-Tooling-Website.git
     dest: /var/www/html
     force: yes
 
@@ -27,3 +27,9 @@
   ansible.builtin.service:
     name: httpd
     state: started
+
+- name: recursively remove /var/www/html/html/ directory
+  become: true
+  ansible.builtin.file:
+    path: /var/www/html/html
+    state: absent

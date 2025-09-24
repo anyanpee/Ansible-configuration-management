@@ -1,0 +1,17 @@
+---
+- name: Install Wireshark on Web Servers
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install wireshark
+      yum:
+        name: wireshark
+        state: present
+    
+    - name: Verify wireshark installation
+      command: wireshark --version
+      register: wireshark_version
+    
+    - name: Display wireshark version
+      debug:
+        msg: "{{ wireshark_version.stdout }}"

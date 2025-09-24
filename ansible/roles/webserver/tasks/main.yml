@@ -15,12 +15,15 @@
   become: true
   ansible.builtin.git:
     repo: https://github.com/anyanpee/Jenkins-CI-CD-Pipeline-for-DevOps-Tooling-Website.git
-    dest: /var/www/html
+    dest: /tmp/tooling
     force: yes
 
-- name: copy html content to one level up
+- name: copy website files to apache directory
   become: true
-  command: cp -r /var/www/html/html/ /var/www/
+  ansible.builtin.copy:
+    src: /tmp/tooling/
+    dest: /var/www/html/
+    remote_src: yes
 
 - name: Start service httpd, if not started
   become: true
@@ -28,8 +31,8 @@
     name: httpd
     state: started
 
-- name: recursively remove /var/www/html/html/ directory
+- name: Enable httpd service
   become: true
-  ansible.builtin.file:
-    path: /var/www/html/html
-    state: absent
+  ansible.builtin.service:
+    name: httpd
+    enabled: yes

@@ -3,9 +3,7 @@
 ## Project Overview
 This project demonstrates the complete implementation of an Ansible bastion host integrated with Jenkins CI/CD pipeline for automated server configuration management. The solution provides infrastructure as code with webhook-triggered deployments and automated wireshark installation across multiple web servers.
 
-## Architecture Components
-
-### Infrastructure Setup
+### Infrastructure Setup 
 - **1 Ubuntu Jenkins Server** - CI/CD orchestration and Ansible control node
 - **2 Amazon Linux Web Servers** - Target servers for automated configuration
 - **GitHub Repository** - Source code management with webhook integration

@@ -1,5 +1,4 @@
 #!/bin/bash
-<<<<<<< HEAD
 
 # Ansible Jenkins Deployment Script
 # This script is executed by Jenkins to deploy configurations
@@ -8,13 +7,10 @@ set -e
 
 =======
 set -e
->>>>>>> 3043089da642f59e7f016ba4a07a7d86c293f958
 echo "Starting Ansible deployment..."
 
 # Change to ansible directory
 cd ansible
-
-<<<<<<< HEAD
 # Test connectivity
 echo "Testing Ansible connectivity..."
 ansible all -m ping
@@ -78,4 +74,4 @@ mkdir -p "$BUILD_DIR" || mkdir -p "/var/snap/jenkins/current/workspace/ansible-d
 cp -r . "$BUILD_DIR/" 2>/dev/null || cp -r . "/var/snap/jenkins/current/workspace/ansible-deployment/build-$(date +%Y%m%d-%H%M%S)/" 2>/dev/null || echo "Archive location not accessible"
 
 echo "Deployment completed successfully!"
->>>>>>> 3043089da642f59e7f016ba4a07a7d86c293f958
+

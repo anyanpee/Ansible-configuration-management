@@ -20,7 +20,7 @@ This project demonstrates the complete implementation of an Ansible bastion host
 
 ## Implementation Documentation
 
-### 1. Infrastructure Setup
+### 1. Infrastructure 
 
 #### Launch Ubuntu EC2 Instance
 ```bash
